@@ -2,10 +2,10 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "نظم للتقنية",
-    short_name: "  نظم للتقنية",
+    name: "بنك الراجحي ",
+    short_name: "  بنك الراجحي ",
     description:
-      "حلول أكاديمية، إبداعية ورقمية مرتبة حول احتياجك. ",
+      "بنك الراجحي ",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",

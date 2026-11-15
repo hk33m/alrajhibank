@@ -1,66 +1,90 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Home, ArrowLeft, AlertTriangle } from "lucide-react";
+import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import { useLanguageStore } from "@/store/languageStore";
 
 export default function NotFound() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const { language } = useLanguageStore();
+
+  const isAr = language !== "en";
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    // يمكنك توجيه المستخدم لصفحة البحث أو تنفيذ منطق البحث هنا
+    console.log("Searching for:", searchQuery);
+  };
+
   return (
-    <div
-      dir="rtl"
-      className="flex min-h-screen items-center justify-center bg-slate-50 px-4"
-    >
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-lg rounded-3xl border border-slate-100 bg-white p-8 text-center shadow-xl"
+    <div className="flex min-h-screen flex-col bg-white font-sans">
+      {/* الهيدر */}
+      <Header />
+
+      {/* ================= محتوى صفحة 404 ================= */}
+      <main
+        dir={isAr ? "rtl" : "ltr"}
+        className="flex flex-1 flex-col items-center justify-center px-4 py-20 md:py-28 text-center"
       >
-        {/* أيقونة الخطأ */}
-        <div className="mb-6 flex justify-center">
-          <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-amber-50 text-amber-500 shadow-inner animate-pulse">
-            <AlertTriangle size={40} strokeWidth={1.8} />
-          </div>
-        </div>
+        <div className="w-full max-w-md mx-auto flex flex-col items-center">
+          
+          {/* رقم الخطأ الكبير 404 */}
+          <h1 className="text-[76px] sm:text-[92px] md:text-[104px] font-extrabold text-[#000B49] leading-none tracking-tight mb-4">
+            404
+          </h1>
 
-        {/* رقم الخطأ */}
-        <h1 className="mb-2 text-6xl font-black tracking-wider text-slate-900">
-          404
-        </h1>
+          {/* النص التوضيحي */}
+          <p className="text-[16px] sm:text-[18px] font-medium text-[#000B49] mb-8">
+            {isAr
+              ? "الصفحة التي تبحث عنها غير موجودة."
+              : "The page you are looking for does not exist."}
+          </p>
 
-        {/* العنوان */}
-        <h2 className="mb-3 text-2xl font-bold text-slate-800">
-          الصفحة غير موجودة
-        </h2>
+          {/* حقل البحث الدائري (Pill Search Input) */}
+          <form onSubmit={handleSearch} className="w-full max-w-[330px] mb-10">
+            <div className="relative flex items-center">
+              <Input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={isAr ? "أدخل كلمة البحث هنا" : "Enter search keyword here"}
+                className={`h-12 w-full rounded-full border border-[#E2E8F0] bg-white text-[14px] text-[#001A49] placeholder:text-[#9CA8C2] focus-visible:border-[#002BFF] focus-visible:ring-2 focus-visible:ring-[#002BFF]/15 shadow-none transition-all ${
+                  isAr ? "pr-5 pl-12 text-right" : "pl-5 pr-12 text-left"
+                }`}
+              />
+              <button
+                type="submit"
+                aria-label={isAr ? "بحث" : "Search"}
+                className={`absolute flex items-center justify-center text-[#001A49] hover:text-[#002BFF] transition-colors ${
+                  isAr ? "left-4" : "right-4"
+                }`}
+              >
+                <Search size={19} strokeWidth={2} />
+              </button>
+            </div>
+          </form>
 
-        {/* الوصف */}
-        <p className="mx-auto mb-8 max-w-sm text-sm leading-relaxed text-slate-500">
-          عذرًا، يبدو أن الصفحة التي تبحث عنها قد تم نقلها أو حذفها، أو أن
-          الرابط الذي أدخلته غير صحيح.
-        </p>
-
-        {/* الأزرار */}
-        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <Link
-            href="/"
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-6 py-3 text-sm font-medium text-white shadow-md transition-all duration-200 hover:bg-slate-800 hover:shadow-lg sm:w-auto"
+          {/* زر العودة إلى الصفحة الرئيسية */}
+          <Button
+            asChild
+            className="h-12 md:h-[52px] px-8 md:px-9 rounded-[14px] bg-[#002BFF] hover:bg-[#0022CC] active:scale-[0.99] text-white font-bold text-[14px] sm:text-[15px] shadow-sm hover:shadow-md transition-all"
           >
-            <Home size={18} />
-            <span>الرئيسية</span>
-          </Link>
+            <Link href="/">
+              {isAr ? "العودة إلى الصفحة الرئيسية" : "Back to Home Page"}
+            </Link>
+          </Button>
 
-          <button
-            type="button"
-            onClick={() => window.history.back()}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-100 px-6 py-3 text-sm font-medium text-slate-700 transition-all duration-200 hover:bg-slate-200 sm:w-auto"
-          >
-            <ArrowLeft size={18} />
-            <span>العودة للخلف</span>
-          </button>
         </div>
-      </motion.div>
+      </main>
+
+      {/* الفوتر */}
+      <Footer />
     </div>
   );
 }
-
