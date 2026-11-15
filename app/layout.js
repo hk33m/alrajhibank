@@ -3,45 +3,24 @@ import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
 
+
 export const metadata = {
-  title: "دعوة زفاف نهى و يونس",
-  description: "بداية أجمل حكايتنا 🤍",
-
-  openGraph: {
-    title: "دعوة زفاف نهى و يونس",
-    description: "بداية أجمل حكايتنا 🤍",
-    type: "website",
-    locale: "ar_YE",
-    images: [
-      {
-        url: "/images/og-wedding.webp",
-        width: 1200,
-        height: 630,
-        alt: "دعوة زفاف نهى و يونس",
-      },
-    ],
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    title: "دعوة زفاف نهى و يونس",
-    description: "بداية أجمل حكايتنا 🤍",
-    images: ["/images/og-wedding.webp"],
-  },
+  title: " الأفراد | مصرف الراجحي",
+  description: "نموذج واجهة مصرفية تجريبية",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <body>
-        {/* <ThemeProvider
+        <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
-        > */}
+        >
           {children}
-        {/* </ThemeProvider> */}
+        </ThemeProvider>
       </body>
     </html>
   );
